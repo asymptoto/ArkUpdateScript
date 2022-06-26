@@ -107,6 +107,8 @@ else:
     try:
         os.mkdir(ark_dir)
         print('Successfully created directory {}'.format(ark_dir))
+        print('Forcing ark server installation')
+        update_game = True
     except Exception as ex:
         print('An error occoured while trying to create the directory:\n{}'.format(ex))
         exit(1)
