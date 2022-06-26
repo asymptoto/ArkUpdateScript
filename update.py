@@ -150,7 +150,7 @@ for mod in mods:
             os.remove(mod_file_path_mods)
             install_mod()
         else:
-            print('Skipping installation of {}'.format(mod))
+            print('Skipped installation of {}'.format(mod))
     else:
         install_mod()
     
