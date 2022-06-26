@@ -59,6 +59,8 @@ if len(sys.argv) > 1:
         print('Usage: \n\t./update.py [--update_game]')
         exit(1)
 
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 with open('settings.ini', 'r') as f:
     opts = dict()
     for line in f:
