@@ -3,7 +3,7 @@ A Python script to update ARK server mods
 Tested on Linux only but this should work on Windows as well
 
 ### Requirements
-- Python 3 (Python 2 should work as well but is untested)
+- Python 3 (Python 2 should work as well but is untested, PyPy 3 is tested and works)
 - Python `requests` module
 - SteamCMD
 
