@@ -120,14 +120,14 @@ if update_game:
     cmd=[steamcmd_path, '+force_install_dir {}'.format(os.path.abspath(ark_dir)), '+login anonymous', '+app_update 376030 validate'] + list('+workshop_download_item 346110 {}'.format(mod) for mod in mods) + ['+quit']
 else:
     if len(mods) > 0:
-        cmd=[steamcmd_path, '+login anonymous', '+force_install_dir', os.path.abspath(os.path.dirname(steamcmd_path))] + list('+workshop_download_item 346110 {}'.format(mod) for mod in mods) + ['+quit']
+        cmd=[steamcmd_path, '+login anonymous'] + list('+workshop_download_item 346110 {}'.format(mod) for mod in mods) + ['+quit']
     else:
         print('Nothing to update')
         exit(0)
 
 subprocess.check_call(cmd)
 
-workshop_dir = os.path.join(opts['steam_dir'], 'steamapps', 'workshop', 'content', '346110')
+workshop_dir = os.path.join(os.path.abspath(os.environ.get('HOME')), 'steam', 'steamapps', 'workshop', 'content', '346110')
 mod_dir = os.path.join(ark_dir, 'ShooterGame', 'Content', 'Mods')
 
 logging.disable(logging.INFO)
