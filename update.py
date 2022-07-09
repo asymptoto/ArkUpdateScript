@@ -100,7 +100,7 @@ if os.path.exists(ark_dir):
                 else:
                     print('Could not find ActiveMods setting in GameUserSettings.ini\nSkipiping mod installation')
         else:
-            print('Could not find GameSettings.ini\nSkipping mod installation')
+            print('Could not find GameUserSettings.ini\nSkipping mod installation')
     else:
         print('{} exists but is not a directory'.format(ark_dir))
         exit(1)
@@ -119,7 +119,12 @@ cmd = ""
 if update_game:
     cmd=[steamcmd_path, '+force_install_dir {}'.format(os.path.abspath(ark_dir)), '+login anonymous', '+app_update 376030 validate'] + list('+workshop_download_item 346110 {}'.format(mod) for mod in mods) + ['+quit']
 else:
-    cmd=[steamcmd_path, '+login anonymous'] + list('+workshop_download_item 346110 {}'.format(mod) for mod in mods) + ['+quit']
+    if len(mods) > 0:
+        cmd=[steamcmd_path, '+login anonymous', '+force_install_dir', os.path.abspath(os.path.dirname(steamcmd_path))] + list('+workshop_download_item 346110 {}'.format(mod) for mod in mods) + ['+quit']
+    else:
+        print('Nothing to update')
+        exit(0)
+
 subprocess.check_call(cmd)
 
 workshop_dir = os.path.join(opts['steam_dir'], 'steamapps', 'workshop', 'content', '346110')
@@ -133,9 +138,9 @@ for mod in mods:
     mod_file_path_workshop = os.path.join(path_in_workshop, '{}.mod'.format(mod))
     mod_file_path_mods = os.path.join(mod_dir, '{}.mod'.format(mod))
     def install_mod():
-        print('Installing {}'.format(title))
         response = requests.get('https://steamcommunity.com/sharedfiles/filedetails/?id={}'.format(mod))
         title = re.search(r"<title>Steam Workshop::(?P<Title>.*)<\/title>", response.content.decode('UTF-8')).group('Title')
+        print('Installing {}'.format(title))
         create_mod_file(os.path.join(workshop_dir, mod), title, int(mod))
         shutil.move(mod_file_path_workshop, mod_dir)
         shutil.copytree(path_in_workshop, path_in_mods)
