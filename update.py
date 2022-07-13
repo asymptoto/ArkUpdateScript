@@ -144,7 +144,8 @@ for mod in mods:
         create_mod_file(os.path.join(workshop_dir, mod), title, int(mod))
         shutil.move(mod_file_path_workshop, mod_dir)
         shutil.copytree(path_in_workshop, path_in_mods)
-        shutil.rmtree(os.path.join(path_in_mods, 'LinuxNoEditor'))
+        if os.path.exists(os.path.join(path_in_mods, 'LinuxNoEditor')):
+            shutil.rmtree(os.path.join(path_in_mods, 'LinuxNoEditor'))
         print('Unpacking {}'.format(title))
         unpack(path_in_mods)
         shutil.rmtree(os.path.join(path_in_mods, 'WindowsNoEditor'))
