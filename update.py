@@ -126,6 +126,7 @@ else:
         exit(0)
 
 subprocess.check_call(cmd)
+print('\nFinished downloading content')
 
 workshop_dir = os.path.join(os.path.abspath(os.environ.get('HOME')), 'steam', 'steamapps', 'workshop', 'content', '346110')
 mod_dir = os.path.join(ark_dir, 'ShooterGame', 'Content', 'Mods')
